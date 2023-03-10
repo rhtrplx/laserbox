@@ -11,6 +11,14 @@
       // Créer une nouvelle instance de WebSocket
       const socket = new WebSocket("ws://localhost:8080");
 
+      // Afficher "Attente du serveur" s'il n'y a pas de connexion immédiate
+      const waitForServer = setTimeout(() => {
+        const infosDiv = document.getElementById("infos");
+        const infoP = document.createElement("p");
+        infoP.textContent = "Attente du serveur...";
+        infosDiv.appendChild(infoP);
+      }, 2000);
+
       // Lorsque le socket est ouvert
       socket.addEventListener("open", (event) => {
         console.log("Socket connected.");
