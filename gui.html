@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Info</title>
+  </head>
+  <body>
+    <h1>Informations WebSocket</h1>
+    <div id="info"></div>
+
+    <script>
+      // Créer une nouvelle instance de WebSocket
+      const socket = new WebSocket("ws://localhost:8080");
+
+      // Lorsque le socket est ouvert
+      socket.addEventListener("open", (event) => {
+        console.log("Socket connected.");
+      });
+
+      // Lorsque le socket reçoit un message
+      socket.addEventListener("message", (event) => {
+        console.log(`Received message: ${event.data}`);
+
+        // Récupérer les informations envoyées par le serveur
+        const info = JSON.parse(event.data);
+
+        // Mettre à jour la page avec les informations
+        const infoDiv = document.getElementById("info");
+        infoDiv.innerHTML = `
+          <p>Température : ${info.temp}</p>
+          <p>Porte ouverte : ${info.gate}</p>
+          <p>Vitesse ventilateur : ${info.vent}</p>
+        `;
+      });
+
+      // Lorsque le socket est fermé
+      socket.addEventListener("close", (event) => {
+        console.log("Socket disconnected.");
+      });
+
+      // Lorsqu'il y a une erreur de socket
+      socket.addEventListener("error", (event) => {
+        console.error("Socket error:", event);
+      });
+    </script>
+  </body>
+</html>
