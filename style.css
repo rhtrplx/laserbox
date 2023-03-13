@@ -1,0 +1,25 @@
+h1 {
+  text-align: center;
+  border: solid black;
+}
+h2 {
+  margin: 10%;
+  padding-left: 60%;
+  text-decoration: underline red;
+}
+
+.valeur {
+  padding-left: 65%;
+  margin-top: -15%;
+  font-size: x-large;
+}
+.camera {
+  width: 50%;
+  display: inline-block;
+  margin-top: -10%;
+  padding-left: 10%;
+}
+img {
+  width: 400px;
+  height: 400px;
+}

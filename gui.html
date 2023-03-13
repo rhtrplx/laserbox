@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WebSocket Info</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>LaserBox</title>
   </head>
   <body>
-    <h1>Informations WebSocket</h1>
+    <h1>LaserBox</h1>
+    <h2>INFO</h2>
     <div id="info"></div>
 
+    <div class="camera">
+      <video id="videoElement" autoplay></video>
+    </div>
+
     <script>
+      // Lire la caméra USB
+      const video = document.getElementById("videoElement");
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+        })
+        .catch((err) => {
+          console.error("Erreur : " + err);
+        });
+
       // Créer une nouvelle instance de WebSocket
       const socket = new WebSocket("ws://localhost:8080");
 
@@ -34,9 +51,10 @@
         // Mettre à jour la page avec les informations
         const infoDiv = document.getElementById("info");
         infoDiv.innerHTML = `
-          <p>Température : ${info.temp}</p>
-          <p>Porte ouverte : ${info.gate}</p>
-          <p>Vitesse ventilateur : ${info.vent}</p>
+          <span class = "valeur">Température : ${info.temp}</span>
+          <span class = "valeur">Porte ouverte : ${info.gate}</span>
+          <span class = "valeur">Vitesse ventilateur : ${info.vent}</span>
+          <span class = "valeur">Luminosité : ${info.lum}</span>
         `;
       });
 
