@@ -13,10 +13,10 @@
 
       // Afficher "Attente du serveur" s'il n'y a pas de connexion immédiate
       const waitForServer = setTimeout(() => {
-        const infosDiv = document.getElementById("infos");
+        const infoDiv = document.getElementById("info");
         const infoP = document.createElement("p");
         infoP.textContent = "Attente du serveur...";
-        infosDiv.appendChild(infoP);
+        infoDiv.appendChild(infoP);
       }, 2000);
 
       // Lorsque le socket est ouvert
