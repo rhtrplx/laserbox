@@ -10,7 +10,7 @@ async def send_info(websocket, path):
     while True:
 
         info = {
-            "temp": random.randint(20, 45), "gate": random.choice([True, False]), "vent": random.randint(100, 2000)
+            "temp": random.randint(30, 45), "gate": random.choice([True, False]), "vent": random.choice([True, False]), "lum": random.randint(0, 100)
         }
         info_json = json.dumps(info)
         await websocket.send(info_json)
