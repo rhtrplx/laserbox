@@ -5,12 +5,19 @@
     <title>LaserBox</title>
   </head>
   <body>
-    <h1>LaserBox</h1>
-    <h2>INFO</h2>
-    <div id="info"></div>
-
-    <div class="camera">
-      <video id="videoElement" autoplay></video>
+    <div>
+      <div class="ctitle">
+        <a class="title">LaserBox</a>
+      </div>
+      <div class="ccategory_name">
+        <a class="category_name">INFO</a>
+      </div>
+      <div class="cvaleur">
+        <a class="valeur" id="valeur"> bla bla car </a>
+      </div>
+      <div class="ccamera">
+        <video id="videoElement" autoplay></video>
+      </div>
     </div>
 
     <script>
@@ -28,12 +35,12 @@
       // Créer une nouvelle instance de WebSocket
       const socket = new WebSocket("ws://localhost:8080");
 
+      // Initialiser les champ "modifiable"
+      const valeurDiv = document.getElementById("valeur");
+
       // Afficher "Attente du serveur" s'il n'y a pas de connexion immédiate
       const waitForServer = setTimeout(() => {
-        const infoDiv = document.getElementById("info");
-        const infoP = document.createElement("p");
-        infoP.textContent = "Attente du serveur...";
-        infoDiv.appendChild(infoP);
+        valeurDiv.innerHTML = "Attente du serveur...";
       }, 2000);
 
       // Lorsque le socket est ouvert
@@ -49,13 +56,20 @@
         const info = JSON.parse(event.data);
 
         // Mettre à jour la page avec les informations
-        const infoDiv = document.getElementById("info");
-        infoDiv.innerHTML = `
-          <span class = "valeur">Température : ${info.temp}</span>
-          <span class = "valeur">Porte ouverte : ${info.gate}</span>
-          <span class = "valeur">Vitesse ventilateur : ${info.vent}</span>
-          <span class = "valeur">Luminosité : ${info.lum}</span>
-        `;
+        valeurDiv.innerHTML = ``;
+        for (information_name in info) {
+          valeurDiv.innerHTML += `<span> ${information_name} : ${info[information_name]} </span> </br>`;
+        }
+
+        // Mettre à jour la page avec les informations
+        // const infoDiv = document.getElementById("valeur");
+        // const to_display = [];
+        // for (information_name in info) {
+        //   to_display.push(
+        //     `<span> ${information_name} : ${info[information_name]} </span> </br>`
+        //   );
+        // }
+        // infoDiv.innerHTML = to_display;
       });
 
       // Lorsque le socket est fermé
