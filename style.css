@@ -1,23 +1,27 @@
-h1 {
+.ctitle {
   text-align: center;
   border: solid black;
-}
-h2 {
-  margin: 10%;
-  padding-left: 60%;
-  text-decoration: underline red;
+  width: 100%;
 }
 
-.valeur {
-  padding-left: 65%;
-  margin-top: -15%;
-  font-size: x-large;
+.ccategory_name {
+  text-align: center;
+  margin-top: 25px;
+  margin-left: 70%;
+  position: inherit;
+}
+
+.cvaleur,
+.clogs {
+  text-align: center;
+  margin-left: 70%;
+  padding-top: 20px;
+  border: solid black;
+  position: inherit;
 }
 .camera {
   width: 50%;
   display: inline-block;
-  margin-top: -10%;
-  padding-left: 10%;
 }
 img {
   width: 400px;
