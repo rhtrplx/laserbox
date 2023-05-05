@@ -35,9 +35,9 @@ class laserbox:
         GPIO.setup(laserbox.DOOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         val = GPIO.input(laserbox.DOOR_PIN)
         if val == 0:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def control_fan(state):
         GPIO.setwarnings(False)
