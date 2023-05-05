@@ -30,7 +30,7 @@ class laserbox:
         return round(temperature)
 
     def read_door():
-        # returns 1 if door is close
+        # returns true if door is opened
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(laserbox.DOOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         val = GPIO.input(laserbox.DOOR_PIN)
@@ -39,21 +39,22 @@ class laserbox:
         else:
             return False
 
-    def control_fan(state):
+    def update_fan():
+        temperature = laserbox.read_temperature()
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(laserbox.FAN_PIN, GPIO.OUT)
-        if state is not True:
-            GPIO.output(laserbox.FAN_PIN, GPIO.LOW)
-        else:
+        if temperature >= 28:
             GPIO.output(laserbox.FAN_PIN, GPIO.HIGH)
-        return state
+        else:
+            GPIO.output(laserbox.FAN_PIN, GPIO.LOW)
 
-    def update_light(door_state):
+    def update_light():
+        door_state = laserbox.read_door()
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(laserbox.LIGHT_PIN, GPIO.OUT)
-        if door_state is not True:
+        if door_state is not False:
             GPIO.output(laserbox.LIGHT_PIN, GPIO.LOW)
         else:
             GPIO.output(laserbox.LIGHT_PIN, GPIO.HIGH)
@@ -88,6 +89,9 @@ async def main():
 
         # Boucle d'événements asyncio
         await asyncio.Future()
+
+    laserbox.update_light()
+    laserbox.update_fan()
 
 # Exécuter la boucle d'événements asyncio
 asyncio.run(main())
