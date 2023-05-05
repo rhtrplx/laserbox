@@ -27,7 +27,7 @@ class laserbox:
             except:
                 pass
         # print(sensor.relative_humidity)
-        return temperature
+        return round(temperature)
 
     def read_door():
         # returns 1 if door is close
