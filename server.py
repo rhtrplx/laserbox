@@ -32,8 +32,8 @@ class laserbox:
     def read_door():
         # returns 1 if door is close
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(DOOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        val = GPIO.input(DOOR_PIN)
+        GPIO.setup(laserbox.DOOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        val = GPIO.input(laserbox.DOOR_PIN)
         if val == 0:
             return False
         else:
@@ -42,21 +42,21 @@ class laserbox:
     def control_fan(state):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(FAN_PIN, GPIO.OUT)
+        GPIO.setup(laserbox.FAN_PIN, GPIO.OUT)
         if state is not True:
-            GPIO.output(FAN_PIN, GPIO.LOW)
+            GPIO.output(laserbox.FAN_PIN, GPIO.LOW)
         else:
-            GPIO.output(FAN_PIN, GPIO.HIGH)
+            GPIO.output(laserbox.FAN_PIN, GPIO.HIGH)
         return state
 
     def update_light(door_state):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(LIGHT_PIN, GPIO.OUT)
+        GPIO.setup(laserbox.LIGHT_PIN, GPIO.OUT)
         if door_state is not True:
-            GPIO.output(LIGHT_PIN, GPIO.LOW)
+            GPIO.output(laserbox.LIGHT_PIN, GPIO.LOW)
         else:
-            GPIO.output(LIGHT_PIN, GPIO.HIGH)
+            GPIO.output(laserbox.LIGHT_PIN, GPIO.HIGH)
 
     def read_vent():
         # return false if vent is off
