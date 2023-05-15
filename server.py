@@ -70,10 +70,6 @@ class laserbox:
             light_state = True
         return light_state
 
-    def read_vent():
-        # return false if vent is off
-        return random.choice([True, False])
-
     def read_lum():
         # return the current brightness
         return random.randint(0, 100)
