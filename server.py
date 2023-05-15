@@ -85,7 +85,7 @@ async def send_info(websocket, path):
         light_state = laserbox.update_light()
         vent_state = laserbox.update_fan()
         info = {
-            "temperature": laserbox.read_temperature(), "porte ouverte": laserbox.read_door(), "ventilateur allume": vent_state, "luminosite": light_state
+            "temperature": laserbox.read_temperature(), "porte ouverte": laserbox.read_door(), "ventilateur allume": vent_state, "luminosite": laserbox.read_lum(), "lumiere allume": light_state
         }
         info_json = json.dumps(info)
         await websocket.send(info_json)
