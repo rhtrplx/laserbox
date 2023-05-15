@@ -62,12 +62,12 @@ class laserbox:
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(laserbox.LIGHT_PIN, GPIO.OUT)
-        if door_state is not False:
-            GPIO.output(laserbox.LIGHT_PIN, GPIO.LOW)
-            light_state = False
-        else:
+        if door_state == False:
             GPIO.output(laserbox.LIGHT_PIN, GPIO.HIGH)
             light_state = True
+        else:
+            GPIO.output(laserbox.LIGHT_PIN, GPIO.LOW)
+            light_state = False
         return light_state
 
     def read_lum():
