@@ -16,6 +16,10 @@ class laserbox:
     FAN_PIN = 23
     LIGHT_PIN = 24
 
+    light_state = False
+    vent_state = False
+    temperature = False
+
     def read_temperature():
         # returns the current temperature
         i2c = busio.I2C(board.SCL, board.SDA)
@@ -46,8 +50,11 @@ class laserbox:
         GPIO.setup(laserbox.FAN_PIN, GPIO.OUT)
         if temperature >= 28:
             GPIO.output(laserbox.FAN_PIN, GPIO.HIGH)
+            vent_state = True
         else:
             GPIO.output(laserbox.FAN_PIN, GPIO.LOW)
+            vent_state = False
+        return vent_state
 
     def update_light():
         door_state = laserbox.read_door()
@@ -56,8 +63,11 @@ class laserbox:
         GPIO.setup(laserbox.LIGHT_PIN, GPIO.OUT)
         if door_state is not False:
             GPIO.output(laserbox.LIGHT_PIN, GPIO.LOW)
+            light_state = False
         else:
             GPIO.output(laserbox.LIGHT_PIN, GPIO.HIGH)
+            light_state = True
+        return light_state
 
     def read_vent():
         # return false if vent is off
@@ -72,8 +82,10 @@ async def send_info(websocket, path):
     # Envoyer des informations en WebSocket lorsque la connexion est établie
     while True:
 
+        light_state = laserbox.update_light()
+        vent_state = laserbox.update_fan()
         info = {
-            "temperature": laserbox.read_temperature(), "porte ouverte": laserbox.read_door(), "ventilateur allume": laserbox.read_vent(), "luminosite": laserbox.read_lum()
+            "temperature": laserbox.read_temperature(), "porte ouverte": laserbox.read_door(), "ventilateur allume": vent_state, "luminosite": light_state
         }
         info_json = json.dumps(info)
         await websocket.send(info_json)
@@ -90,8 +102,6 @@ async def main():
         # Boucle d'événements asyncio
         await asyncio.Future()
 
-    laserbox.update_light()
-    laserbox.update_fan()
 
 # Exécuter la boucle d'événements asyncio
 asyncio.run(main())
