@@ -15,6 +15,7 @@ class laserbox:
     DOOR_PIN = 18
     FAN_PIN = 23
     LIGHT_PIN = 24
+    MAX_TEMP = 30
 
     light_state = False
     vent_state = False
@@ -48,7 +49,7 @@ class laserbox:
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(laserbox.FAN_PIN, GPIO.OUT)
-        if temperature >= 28:
+        if temperature >= laserbox.MAX_TEMP:
             GPIO.output(laserbox.FAN_PIN, GPIO.HIGH)
             vent_state = True
         else:
